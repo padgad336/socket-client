@@ -8,7 +8,7 @@ class App extends Component {
     this.state = {
       input: {},
       message: [],
-      endpoint: "http://localhost:9000" // เชื่อมต่อไปยัง url ของ realtime server
+      endpoint: "http://10.38.194.50:9000" // เชื่อมต่อไปยัง url ของ realtime server
     }
   }
 
@@ -21,7 +21,7 @@ class App extends Component {
     const { endpoint, input } = this.state
     const socket = socketIOClient(endpoint)
     socket.emit('sent-message', input)
-    this.setState({ input: {} })
+    // this.setState({ input: {} })
   }
 
   // รอรับข้อมูลเมื่อ server มีการ update
@@ -42,18 +42,18 @@ class App extends Component {
   changeInput = (e) => {
     // console.log('e',e.target.value)
     const edata=e.target?.value
-    const msg=data.filter((item)=>item?.i==edata)
+    const msg=data.filter((item)=>item?.i===edata)
 console.log('d',edata,msg[0])
     this.setState({ input: msg[0]||{} })
   }
 
   render() {
-    const { input, message } = this.state
+    const {  message } = this.state
     // console.log(message)
     return (
       <div>
         <div style={style}>
-        <label for="cars">Choose a car:</label>
+        <label htmlFor="cars">Choose an alarm  test:</label>
   <select onChange={this.changeInput} name="cars" id="cars">
   <option key={0} value={0}></option>
     {data?.map((item)=> <option key={item?.i} value={item?.i}>mac:{item?.macaddress} msg:{item?.message?.msg}</option>)}
